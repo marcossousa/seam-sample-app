@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page no-conversation-view-id="/TbUserList.xhtml"
+ xmlns="http://jboss.com/products/seam/pages"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.2.xsd">
+ <begin-conversation flush-mode="MANUAL" join="true"/>
+ <action execute="#{userHome.wire}"/>
+ <param name="tbUserFrom"/>
+ <param name="tbUserUserid" value="#{userHome.tbUserUserid}"/>
+ <navigation from-action="#{userHome.persist}">
+  <rule if-outcome="persisted">
+   <end-conversation/>
+   <redirect view-id="/user.xhtml"/>
+  </rule>
+ </navigation>
+ <navigation from-action="#{userHome.update}">
+  <rule if-outcome="updated">
+   <end-conversation/>
+   <redirect view-id="/user.xhtml"/>
+  </rule>
+ </navigation>
+ <navigation from-action="#{userHome.remove}">
+  <rule if-outcome="removed">
+   <end-conversation/>
+   <redirect view-id="/userList.xhtml"/>
+  </rule>
+ </navigation>
+</page>

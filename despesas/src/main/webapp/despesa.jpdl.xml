@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow-definition 
+        xmlns="http://jboss.com/products/seam/pageflow"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://jboss.com/products/seam/pageflow 
+                            http://jboss.com/products/seam/pageflow-2.2.xsd"
+        name="DespesaWorkflow">
+   
+   <start-page name="start" view-id="/home.xhtml">
+      <transition name="criarGrupo" to="criarGrupo"/>
+   </start-page>
+   
+   <page name="criarGrupo" view-id="/grupoDespesa.xhtml">
+      <description>Cria despesa</description>
+      <transition name="persisted" to="criarDespesa"/>
+   </page>
+   
+   <page name="criarDespesa" view-id="/despesa.xhtml">
+      <description>Cria despesa</description>
+      <transition name="persisted" to="verificaCriacaoLancamento"/>
+   </page>
+   
+   <decision name="verificaCriacaoLancamento" expression="#{despesaHome.instance.isDespesaAgendada}">
+   		<transition name="false" to="criarLancamento"/>
+   		<transition name="true" to="sucessoHome"/>
+   	</decision>
+
+   <page name="criarLancamento" view-id="/lancamento.xhtml">
+      <description>Criar lancamento</description>
+      <transition name="persisted" to="sucesso"/>
+   </page>
+
+   <page name="sucesso" view-id="/lancamentoList.xhtml">
+      <end-conversation before-redirect="yes" />
+   </page>
+   
+   <page name="sucessoHome" view-id="/home.xhtml">
+      <end-conversation before-redirect="yes" />
+   </page>
+</pageflow-definition>

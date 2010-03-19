@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-9"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+	<h:form>
+    <rich:panel>
+        <f:facet name="header">#{messages['label.despesa.lista.titulo']}</f:facet>
+        <div class="results">
+
+            <h:outputText value="#{messages['msg.despesa.naoEncontrada']}"
+                       rendered="#{empty ListaDespesa}"/>
+
+            <h:dataTable id="despesaList" var="despesa"
+                      value="#{ListaDespesa}">
+                <h:column>
+                    <f:facet name="header">#{messages['label.id']}</f:facet>
+                    #{despesa.id}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">#{messages['label.despesa.descricao']}</f:facet>
+                    <h:outputText  id="despesa" value="#{despesa.descricao}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">#{messages['label.acoes']}</f:facet>
+                    <s:button view="/despesa.xhtml" action="#{despesaList.selecionar}" value="#{messages['label.editar']}" />
+                </h:column>
+            </h:dataTable>
+
+        </div>
+
+    </rich:panel>
+
+    <div class="actionButtons">
+        <s:button id="done"
+               value="#{messages['label.despesa.criar']}"
+                view="/despesa.xhtml"/>
+    </div>
+
+    </h:form>
+</ui:define>
+
+</ui:composition>

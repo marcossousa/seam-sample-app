@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="ISO-8859-9"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="despesaForm">
+		<a:loadScript src="/javascript/jquery.numeric.js"/>
+        <rich:panel>
+            <f:facet name="header">#{messages['label.despesa.titulo']}</f:facet>
+
+            <s:decorate id="descricaoField" template="layout/edit.xhtml">
+                <ui:define name="label">#{messages['label.despesa.descricao']}</ui:define>
+                <h:inputText id="descricao" required="true" value="#{despesaHome.instance.descricao}">
+                	 <a:support event="onblur" reRender="descricaoField" ajaxSingle="true" bypassUpdates="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            <s:decorate id="grupoField" template="layout/edit.xhtml">
+                <ui:define name="label">#{messages['label.despesa.grupo']}</ui:define>
+                <h:selectOneMenu id="grupo" required="true" value="#{despesaHome.instance.grupoDespesa}" converter="grupoDespesaConverter">
+                	 <a:support event="onblur" reRender="grupoField" ajaxSingle="true" bypassUpdates="true"/>
+                	 <s:selectItems var="grupo" value="#{despesaHome.gruposDespesa}" label="#{grupo.name}" noSelectionLabel="Selecione um item"></s:selectItems>
+                </h:selectOneMenu>
+            </s:decorate>
+            
+            <s:decorate id="categoriaField" template="layout/edit.xhtml">
+                <ui:define name="label">#{messages['label.despesa.categoria']}</ui:define>
+                <h:selectOneMenu id="periodo" value="#{despesaHome.instance.categoria}">
+                	 <f:selectItem itemLabel="Selecione"/>
+                	 <s:enumItem enumValue="FIXA" label="Fixa"/>
+                	 <s:enumItem enumValue="VARIAVEL" label="Variável"/>
+                	 <s:enumItem enumValue="INVESTIMENTO" label="Investimento"/>
+                </h:selectOneMenu>
+            </s:decorate>
+            
+            <a:region>
+            <s:decorate id="isAgendamentoField" template="layout/edit.xhtml">
+                <ui:define name="label">#{messages['label.despesa.agendamento']}</ui:define>
+                <h:selectBooleanCheckbox id="isAgendamento" required="true" value="#{despesaHome.instance.isDespesaAgendada}">
+                	 <a:support event="onclick" reRender="agendamentoField" ajaxSingle="true" action="#{despesaHome.habilitarAgendamento}" bypassUpdates="false" />
+                </h:selectBooleanCheckbox> #{messages['label.despesa.habilitarAgendamento']}
+            </s:decorate>
+            </a:region>
+            
+            <h:panelGroup id="agendamentoField">
+            	<h:panelGroup rendered="#{despesaHome.instance.isDespesaAgendada}">
+            	
+            		<s:decorate id="dados" template="layout/edit.xhtml">
+		                <ui:define name="label">#{messages['label.despesa.agendamento.titulo']}</ui:define>
+            		</s:decorate>
+            		
+            		<s:decorate id="periodoField" template="layout/edit.xhtml">
+		                <ui:define name="label">#{messages['label.agendamento.periodo']}</ui:define>
+		                <h:selectOneMenu id="periodo" required="true" value="#{despesaHome.instance.agendamento.periodo}">
+		                	 <a:support event="onblur" reRender="periodoField" bypassUpdates="true"/>
+		                	 <s:enumItem enumValue="DIARIO" label="Diário"/>
+		                	 <s:enumItem enumValue="SEMANAL" label="Semanal"/>
+		                	 <s:enumItem enumValue="MENSAL" label="Mensal"/>
+		                	 <s:enumItem enumValue="ANUAL" label="Anual"/>
+		                </h:selectOneMenu>
+		            </s:decorate>
+		            
+		            <s:decorate id="valorField" template="layout/edit.xhtml">
+		                <ui:define name="label">#{messages['label.agendamento.valor']}</ui:define>
+		                <h:inputText id="valor" required="true" value="#{despesaHome.instance.agendamento.valor}">
+		                	 <a:support event="onblur" reRender="valorField" bypassUpdates="true"/>
+		                	 <f:convertNumber pattern="#,##0.00" locale="pt_BR"/>
+		                </h:inputText>
+		            </s:decorate>
+		            
+		            <s:decorate id="iniciarEmField" template="layout/edit.xhtml">
+		                <ui:define name="label">#{messages['label.agendamento.iniciarEm']}</ui:define>
+		                <rich:calendar id="valor" required="true" value="#{despesaHome.instance.agendamento.iniciarEm}" datePattern="dd/MM/yyyy">
+		                	 <a:support event="onblur" reRender="iniciarEmField" bypassUpdates="true"/>
+		                	 <f:convertDateTime pattern="dd/MM/yyyy"/>
+		                </rich:calendar>
+		            </s:decorate>
+            
+            	</h:panelGroup>
+            </h:panelGroup>
+
+            <div style="clear:both"/>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{despesaHome.persist}"
+                       rendered="#{!despesaHome.managed}"/>
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{despesaHome.update}"
+                       rendered="#{despesaHome.managed}"/>
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{despesaHome.remove}"
+                      immediate="true"
+                       rendered="#{despesaHome.managed}"/>
+                       
+           <h:commandButton id="cancel"
+                          value="Cancelar"
+                         action="#{despesaHome.cancel}"
+                      immediate="true"/>
+            
+        </div>
+
+    </h:form>
+
+</ui:define>
+
+</ui:composition>

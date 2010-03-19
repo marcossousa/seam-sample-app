@@ -1,0 +1,80 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="lancamentoForm">
+
+        <rich:panel>
+            <f:facet name="header">#{messages['label.lancamento.despesa']}</f:facet>
+
+            <s:decorate id="despesaField" template="layout/edit.xhtml">
+                <ui:define name="label">#{messages['label.lancamento.titulo']}</ui:define>
+                <h:selectOneMenu id="grupo" required="true" value="#{lancamentoHome.instance.despesa}" converter="DespesaConverter">
+                	 <a:support event="onblur" reRender="despesaField" ajaxSingle="true" bypassUpdates="true"/>
+                	 <s:selectItems var="despesa" value="#{lancamentoHome.despesas}" label="#{despesa.descricao}" noSelectionLabel="Selecione uma despesa"></s:selectItems>
+                </h:selectOneMenu>
+            </s:decorate>
+            
+            <s:decorate id="dataField" template="layout/edit.xhtml">
+                <ui:define name="label">#{messages['label.lancamento.data']}</ui:define>
+                <rich:calendar id="valor" required="true" value="#{lancamentoHome.instance.data}" datePattern="dd/MM/yyyy">
+                	 <a:support event="onblur" reRender="dataField" bypassUpdates="true" ajaxSingle="true"/>
+                	 <f:convertDateTime pattern="dd/MM/yyyy"/>
+           		</rich:calendar>
+           	</s:decorate>
+            
+            <s:decorate id="valorField" template="layout/edit.xhtml">
+                <ui:define name="label">#{messages['label.lancamento.valor']}</ui:define>
+                <h:inputText id="valor" required="true" value="#{lancamentoHome.instance.valor}">
+                	 <a:support event="onblur" reRender="valorField" bypassUpdates="true" ajaxSingle="true"/>
+                	 <f:convertNumber pattern="#,##0.00" locale="pt_BR"/>
+                </h:inputText>
+            </s:decorate>
+            
+            <s:decorate id="tipoField" template="layout/edit.xhtml">
+                <ui:define name="label">#{messages['label.lancamento.tipo']}</ui:define>
+                <h:selectOneMenu id="tipo" required="true" value="#{lancamentoHome.instance.tipo}">
+                	 <a:support event="onblur" reRender="periodoField" bypassUpdates="true"/>
+                	 <s:enumItem enumValue="PAGAMENTO" label="Pagamento"/>
+                	 <s:enumItem enumValue="RECEBIMENTO" label="Recebimento"/>
+                </h:selectOneMenu>
+            </s:decorate>
+
+            <div style="clear:both"/>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{lancamentoHome.save}"
+                       rendered="#{!lancamentoHome.managed}"/>
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{lancamentoHome.save}"
+                       rendered="#{lancamentoHome.managed}"/>
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{lancamentoHome.remove}"
+                      immediate="true"
+                       rendered="#{lancamentoHome.managed}"/>
+            <s:button propagation="end"
+                               id="cancel"
+                            value="Cancel"
+                             view="/lancamentoList.xhtml"/>
+        </div>
+
+    </h:form>
+
+</ui:define>
+
+</ui:composition>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="ISO-8859-9"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="tipoDespesaForm">
+
+        <rich:panel>
+            <f:facet name="header">Grupo de Despesa</f:facet>
+
+            <s:decorate id="nameField" template="layout/edit.xhtml">
+                <ui:define name="label">Nome</ui:define>
+                <h:inputText id="name" required="true"
+                             value="#{grupoDespesaHome.instance.name}"/>
+            </s:decorate>
+
+            <div style="clear:both"/>
+            <h:panelGroup id="despesasContainer">
+            	<h:dataTable id="despesaList" var="despesa"
+                      value="#{grupoDespesaHome.instance.despesas}"
+	                   rendered="#{grupoDespesaHome.showDespesas and not empty grupoDespesaHome.instance.despesas}">
+	                <h:column>
+	                    <f:facet name="header">Id</f:facet>
+	                    #{despesa.id}
+	                </h:column>
+	                <h:column>
+	                    <f:facet name="header">Descrição</f:facet>
+	                    <s:link id="despesa"
+	                         value="#{despesa.descricao}"
+	                   propagation="none"
+	                         view="/despesa.xhtml">
+	                        <f:param name="despesaId"
+	                                value="#{despesa.id}"/>
+	                    </s:link>
+	                </h:column>
+	            </h:dataTable>
+            </h:panelGroup>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+        	<h:commandButton id="mostrar"
+                          value="Mostrar Despesas"
+                         action="#{grupoDespesaHome.mostrarDespesas}"/>
+                       
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{grupoDespesaHome.persist}"
+                       rendered="#{!grupoDespesaHome.managed}"/>
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{grupoDespesaHome.update}"
+                       rendered="#{grupoDespesaHome.managed}"/>
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{grupoDespesaHome.remove}"
+                      immediate="true"
+                       rendered="#{grupoDespesaHome.managed}"/>
+            <s:button propagation="end"
+                               id="cancel"
+                            value="Cancel"
+                             view="/grupoDespesaList.xhtml"/>
+        </div>
+
+    </h:form>
+
+</ui:define>
+
+</ui:composition>

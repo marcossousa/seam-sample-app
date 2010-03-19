@@ -1,0 +1,122 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="tbUser" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{userHome.managed ? 'Edit' : 'Add'} User</f:facet>
+
+            <s:decorate id="enableField" template="layout/edit.xhtml">
+                <ui:define name="label">Enable</ui:define>
+                <h:selectBooleanCheckbox id="enable"
+                                   required="true"
+                                      value="#{userHome.instance.enabled}"/>
+            </s:decorate>
+
+
+            <s:decorate id="firstNameField" template="layout/edit.xhtml">
+                <ui:define name="label">First name</ui:define>
+                <h:inputText id="firstName"
+                       required="true"
+                           size="50"
+                      maxlength="50"
+                          value="#{userHome.instance.firstName}">
+                    <a:support event="onblur" reRender="firstNameField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="lastNameField" template="layout/edit.xhtml">
+                <ui:define name="label">Last name</ui:define>
+                <h:inputText id="lastName"
+                       required="true"
+                           size="50"
+                      maxlength="50"
+                          value="#{userHome.instance.lastName}">
+                    <a:support event="onblur" reRender="lastNameField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+
+
+            <s:decorate id="userNameField" template="layout/edit.xhtml">
+                <ui:define name="label">User name</ui:define>
+                <h:inputText id="userName"
+                       required="true"
+                           size="20"
+                      maxlength="20"
+                          value="#{userHome.instance.username}">
+                    <a:support event="onblur" reRender="userNameField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+            <s:decorate id="passwordField" template="layout/edit.xhtml">
+                <ui:define name="label">Password</ui:define>
+                <h:inputSecret id="password"
+                       required="true"
+                           size="20"
+                      maxlength="20"
+                          value="#{userHome.instance.passwordHash}">
+                </h:inputSecret>
+            </s:decorate>
+            
+             <s:decorate id="dtLastLoginField" template="layout/edit.xhtml">
+                <ui:define name="label">Dt last login</ui:define>
+                <rich:calendar id="dtLastLogin" disabled="true" value="#{userHome.instance.lastLogin}" datePattern="MM/dd/yyyy hh:mm a"/>
+            </s:decorate>
+            
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{userHome.persist}"
+                       disabled="#{!userHome.wired}"
+                       rendered="#{!userHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{userHome.update}"
+                       rendered="#{userHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{userHome.remove}"
+                      immediate="true"
+                       rendered="#{userHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/user.xhtml"
+                rendered="#{userHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty tbUserFrom ? 'userList' : tbUserFrom}.xhtml"
+                rendered="#{!userHome.managed}"/>
+
+        </div>
+    </h:form>
+
+</ui:define>
+
+</ui:composition>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.com/products/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.2.xsd"
+      concurrent-request-timeout="2222222"
+      login-required="true">
+      <restrict>#{s:hasRole('admin') or s:hasRole('master')}</restrict>
+   <rewrite pattern="/lancamentos"/>
+   <rewrite pattern="/lancamentos/inicio/{inicio}"/>
+   <rewrite pattern="/lancamentos/inicio/{inicio}/ordenar/{ordenar}/direcao/{direcao}"/>
+   <param name="inicio" value="#{lancamentoList.firstResult}"/>
+   <param name="ordenar" value="#{lancamentoList.orderColumn}"/>
+   <param name="direcao" value="#{lancamentoList.orderDirection}"/>
+
+
+</page>

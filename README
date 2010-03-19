@@ -1,0 +1,8 @@
+---------------------------------------------------------------------
+  Seam Application Sample
+---------------------------------------------------------------------
+This application contains some samples of the most important features
+of Jboss Seam.
+
+You need Eclipse + Seam 2.2.0GA and Tomcat.
+

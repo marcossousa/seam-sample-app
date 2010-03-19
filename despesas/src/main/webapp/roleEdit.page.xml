@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page no-conversation-view-id="/TbRoleList.xhtml"
+ xmlns="http://jboss.com/products/seam/pages"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.2.xsd">
+ <begin-conversation flush-mode="MANUAL" join="true"/>
+ <action execute="#{tbRoleHome.wire}"/>
+ <param name="tbRoleFrom"/>
+ <param name="tbRoleRoleid" value="#{tbRoleHome.tbRoleRoleid}"/>
+ <navigation from-action="#{tbRoleHome.persist}">
+  <rule if-outcome="persisted">
+   <end-conversation/>
+   <redirect view-id="/role.xhtml"/>
+  </rule>
+ </navigation>
+ <navigation from-action="#{tbRoleHome.update}">
+  <rule if-outcome="updated">
+   <end-conversation/>
+   <redirect view-id="/role.xhtml"/>
+  </rule>
+ </navigation>
+ <navigation from-action="#{tbRoleHome.remove}">
+  <rule if-outcome="removed">
+   <end-conversation/>
+   <redirect view-id="/roleList.xhtml"/>
+  </rule>
+ </navigation>
+</page>

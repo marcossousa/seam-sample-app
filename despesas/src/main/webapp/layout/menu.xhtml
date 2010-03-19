@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-9"?>
+<rich:toolBar
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:rich="http://richfaces.org/rich">
+    <rich:toolBarGroup>
+        <h:outputText value="Treinamento"/>
+        <s:link id="menuHomeId" view="/home.xhtml" value="Home" propagation="none"/>
+    </rich:toolBarGroup>
+    <!-- @newMenuItem@ -->
+    <rich:dropDownMenu showDelay="250" hideDelay="0" submitMode="none">
+        <f:facet name="label">Controle de usuarios</f:facet>
+	<rich:menuItem>
+    	<s:link view="/roleList.xhtml" value="Roles" id="rolesId" includePageParams="false" propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/userList.xhtml" value="Usuarios" id="usersId" includePageParams="false" propagation="none"/>
+     </rich:menuItem>
+    </rich:dropDownMenu>
+    <rich:dropDownMenu showDelay="250" hideDelay="0" submitMode="none">
+        <f:facet name="label">Despesas</f:facet>
+	<rich:menuItem>
+    	<s:link view="/grupoDespesaList.xhtml" value="Grupos de despesa" id="gruposId" includePageParams="false" propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/despesaList.xhtml" value="Despesas" id="despesaId" includePageParams="false" propagation="none"/>
+     </rich:menuItem>
+     <rich:menuItem>
+    	<s:link view="/lancamentoList.xhtml" value="Lançamentos" id="lancamentosId" includePageParams="false" propagation="none"/>
+     </rich:menuItem>
+    </rich:dropDownMenu>
+    <rich:toolBarGroup location="right">
+    	<h:form>
+        <h:selectOneMenu value="#{localeSelector.localeString}">
+    		<f:selectItems value="#{localeSelector.supportedLocales}"/>
+		</h:selectOneMenu>
+		<h:commandButton action="#{localeSelector.select}" value="#{messages['i18n.alterar']}"/>
+		</h:form>
+        <s:link id="menuLoginId" view="/login.xhtml" value="Login" rendered="#{not identity.loggedIn}" propagation="none"/>
+        <s:link id="menuLogoutId" view="/home.xhtml" action="#{identity.logout}" value="Logout" rendered="#{identity.loggedIn}" propagation="none"/>
+    </rich:toolBarGroup>
+</rich:toolBar>

@@ -1,0 +1,9 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:c="http://java.sun.com/jstl/core"
+    xmlns:s="http://jboss.com/products/seam/taglib">
+    <s:link styleClass="columnHeader" value="#{label} #{bean.orderColumn == ordenar ? (bean.orderDirection == 'desc' ? messages.down : messages.up) : ''}"
+    	view="#{view}/inicio/#{empty bean.firstResult ? '0' : bean.firstResult}/ordenar/#{ordenar}/direcao/#{bean.orderColumn == ordenar and bean.orderDirection == 'asc' ? 'desc' : 'asc'}"/>
+</ui:composition>

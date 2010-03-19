@@ -1,0 +1,67 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <rich:panel>
+        <f:facet name="header">User Details</f:facet>
+
+        <s:decorate id="userid" template="layout/display.xhtml">
+            <ui:define name="label">User ID</ui:define>
+            <h:outputText value="#{userHome.instance.userId}"/>
+        </s:decorate>
+
+        <s:decorate id="enable" template="layout/display.xhtml">
+            <ui:define name="label">Enable</ui:define>
+            <h:outputText value="#{userHome.instance.enabled}"/>
+        </s:decorate>
+
+        <s:decorate id="userName" template="layout/display.xhtml">
+            <ui:define name="label">User name</ui:define>
+            <h:outputText value="#{userHome.instance.username}"/>
+        </s:decorate>
+        
+        <s:decorate id="firstName" template="layout/display.xhtml">
+            <ui:define name="label">First name</ui:define>
+            <h:outputText value="#{userHome.instance.firstName}"/>
+        </s:decorate>
+
+
+        <s:decorate id="lastName" template="layout/display.xhtml">
+            <ui:define name="label">Last name</ui:define>
+            <h:outputText value="#{userHome.instance.lastName}"/>
+        </s:decorate>
+
+        <s:decorate id="dtLastLogin" template="layout/display.xhtml">
+            <ui:define name="label">Last login</ui:define>
+            <h:outputText value="#{userHome.instance.lastLogin}">
+                <s:convertDateTime type="both" dateStyle="short"/>
+            </h:outputText>
+        </s:decorate>
+
+        <div style="clear:both"/>
+
+    </rich:panel>
+
+    <div class="actionButtons">
+
+        <s:button view="/userEdit.xhtml"
+                    id="edit"
+                 value="Edit"/>
+
+        <s:button view="/#{empty tbUserFrom ? 'userList' : tbUserFrom}.xhtml"
+                    id="done"
+                 value="Done"/>
+
+    </div>
+
+</ui:define>
+
+</ui:composition>

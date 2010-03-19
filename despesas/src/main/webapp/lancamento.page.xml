@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.com/products/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.2.xsd"
+      login-required="true">
+      
+      <param name="lancamentoId" value="#{lancamentoHome.lancamentoId}"/>
+      <action execute="#{lancamentoHome.editar}" on-postback="false" if="#{lancamentoHome.lancamentoId != null}"/>
+      
+      <navigation from-action="#{lancamentoHome.save}">
+      	<rule if-outcome="persisted">
+      		<end-conversation before-redirect="true"/>
+      		<redirect view-id="/lancamentos"/>
+      	</rule>
+      </navigation>
+   
+
+</page>
