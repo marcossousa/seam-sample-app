@@ -74,16 +74,18 @@
             <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>
             <version>1.2</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>java.el</groupId>
-                    <artifactId>el-api</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>java.el</groupId>
-                    <artifactId>el-ri</artifactId>
-                </exclusion>
-            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>el-api</artifactId>
+            <version>1.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>el-ri</artifactId>
+            <version>1.2</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.sun.facelets</groupId>
@@ -152,27 +154,54 @@
             <groupId>org.drools</groupId>
             <artifactId>drools-compiler</artifactId>
             <version>5.0.1</version>
+            <exclusions>
+            	<exclusion>
+            		<groupId>janino</groupId>
+            		<artifactId>janino</artifactId>
+            	</exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.drools</groupId>
             <artifactId>drools-core</artifactId>
             <version>5.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.persistence</groupId>
-	        <artifactId>persistence-api</artifactId>
-	        <version>1.0</version>
-            <scope>provided</scope>
+            <exclusions>
+            	<exclusion>
+            		<groupId>org.mvel</groupId>
+            		<artifactId>mvel2</artifactId>
+            	</exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache</artifactId>
             <version>1.6.1</version>
         </dependency>
+        
+		<dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-annotations</artifactId>
+            <version>3.4.0.ga</version>
+            <exclusions>
+                <exclusion>
+                        <groupId>org.hibernate</groupId>
+                        <artifactId>hibernate</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.hibernate</groupId>
+                    <artifactId>ejb3-persistence</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-commons-annotations</artifactId>
+            <version>3.1.0.ga</version>
+        </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>3.3.2.GA</version>
+            <version>3.3.2.ga</version>
             <exclusions>
                 <exclusion>
                     <groupId>javassist</groupId>
@@ -187,7 +216,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>3.4.0.GA</version>
+            <version>3.4.0.ga</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.hibernate</groupId>
@@ -195,21 +224,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-annotations</artifactId>
-            <version>3.4.0.GA</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.hibernate</groupId>
-                    <artifactId>ejb3-persistence</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>3.1.0.GA</version>
+            <version>3.1.0.ga</version>
         </dependency>
         <dependency>
 		    <groupId>org.slf4j</groupId>
@@ -236,21 +255,40 @@
 		  <groupId>org.tuckey</groupId>
 		  <artifactId>urlrewritefilter</artifactId>
 		  <version>3.0.4</version>
+		  <exclusions>
+		  	<exclusion>
+		  		<groupId>javax.servlet</groupId>
+		  		<artifactId>servlet-api</artifactId>
+		  	</exclusion>
+		  </exclusions>
 		</dependency>
 		<dependency>
 			<groupId>hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
 			<version>1.8.0.7</version>
 		</dependency>
-		   <dependency>
-            <groupId>org.jbpm.jbpm4</groupId>
-            <artifactId>jbpm-api</artifactId>
-            <version>4.0</version>
-        </dependency>
-         <dependency>
-            <groupId>org.jbpm.jbpm4</groupId>
+        <dependency>
+            <groupId>org.jbpm.jbpm3</groupId>
             <artifactId>jbpm-jpdl</artifactId>
-            <version>4.0</version>
+            <version>3.2.8</version>
+            <exclusions>
+            	<exclusion>
+            		<groupId>org.jbpm.jbpm3</groupId>
+            		<artifactId>jbpm-pvm</artifactId>
+            	</exclusion>
+            	<exclusion>
+            		<groupId>org.hibernate</groupId>
+            		<artifactId>hibernate</artifactId>
+            	</exclusion>
+            	<exclusion>
+            		<groupId>org.apache.jackrabbit</groupId>
+      				<artifactId>jackrabbit-core</artifactId>
+            	</exclusion>
+            	<exclusion>
+            		<groupId>org.apache.ant</groupId>
+      				<artifactId>ant</artifactId>
+            	</exclusion>
+            </exclusions>
         </dependency>
     </dependencies>  
 	<repositories>

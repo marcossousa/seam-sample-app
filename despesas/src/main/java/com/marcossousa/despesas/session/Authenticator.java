@@ -25,6 +25,8 @@ public class Authenticator {
 	private Credentials credentials;
 	@In
 	private EntityManager entityManager;
+	
+	private String path;
 
 	public boolean authenticate() {
 		log.info("authenticating {0}", credentials.getUsername());
@@ -46,6 +48,14 @@ public class Authenticator {
 		} catch (NoResultException ex) {
 			return false;
 		}
+	}
+	
+	public String getPath() {
+		return path;
+	}
+	
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 }
